@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useTestNG()
+
+    // Using the G1 garbage collector to get similar semantics as in our production environment.
+    jvmArgs '-XX:+UseG1GC'
+
+    // Force test to always re-run
+    outputs.upToDateWhen { false }
+}
+
+dependencies {
+    testCompile 'joda-time:joda-time:2.9.9'
+    testCompile "org.testng:testng:6.11"
+
+    testCompile 'de.ruedigermoeller:fst:2.57'
+    testCompile 'io.netty:netty-codec:4.1.33.Final'
+
+    // JBoss high-performance (de)serialization
+    compile( "org.jboss.marshalling:jboss-marshalling:2.0.6.Final" )
+    compile( "org.jboss.marshalling:jboss-marshalling-river:2.0.6.Final" )
+    compile( "org.jboss.marshalling:jboss-marshalling-serial:2.0.6.Final" )
+
+}
